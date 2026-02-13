@@ -5,8 +5,8 @@ from sqlalchemy import create_engine
 host = "localhost"
 port = "5432"
 dbname = "gme221"
-user = "postgres"
-password = "Elupdb2025*"
+user = "ajdcc"
+password = "gme221_db"
 
 # Create connection string
 conn_str = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{dbname}"
@@ -41,31 +41,42 @@ overlay["percentage"] = (
 overlay["percentage"] = overlay["percentage"].round(2)
 
 # Identify the indexes of the parcels that have multiple land uses
-mixed_parcels_idx = overlay.groupby("parcel_pin").filter(lambda x: len(x) > 1).index # len(x) > 1 means that all parcel_pin appearing more than once in the overlay geodataframe
+mixed_parcels_idx = overlay.groupby("parcel_pin").filter(lambda x: len(x) > 1).index # len(x) > 1 means that a parcel_pin appears more than once in the overlay geodataframe
 
 # Using the identified indices of the mixed_parcels, fetch all features matching the condition using the .loc method
-mixed = overlay.loc[mixed_parcels_idx, ["parcel_pin", "name", "percentage", "geometry"]]
+mixed = overlay.loc[mixed_parcels_idx, ["parcel_pin", "name", "percentage"]]
 
-# Identify all parcels that have a land use greater than 60
-non_mixed_use_idx = mixed.groupby("parcel_pin")["percentage"].max().loc[lambda x: x > 60].index
+# Identify all parcel_pin values that have a land use greater than 60%
+max_per_parcel = mixed.groupby("parcel_pin")["percentage"].max()
 
-# Get all parcels with no land use greater than 60 using the tilde operator (inverse)
-mixed_use_parcels = mixed[~mixed["parcel_pin"].isin(non_mixed_use_idx)]
+# Get parcel_pin values of parcels that have no single land use greater than 60%
+mixed_use_parcel_pins = max_per_parcel[max_per_parcel <= 60].index
 
+# Extract parcels with no single land use greater than 60% using the .isin() method
+mixed_use_final = mixed[mixed["parcel_pin"].isin(mixed_use_parcel_pins)]
+
+# print(mixed_use_final.head())
+
+# Revert back to the original geometry
 geom = overlay[["parcel_pin","geometry"]].dissolve(
     by="parcel_pin").reset_index()
 
-final_mixed_use = geom.merge(
-    mixed_use_parcels,
+# Merge using original geometry using the "right" join to only match those that are in the mixed_use_final df items
+final_output = geom.merge(
+    mixed_use_final,
     on="parcel_pin",
-    how="left"
+    how="right"
 )
 
 # Reprojecting it back to EPSG 4326
-final_mixed_use = final_mixed_use.to_crs(epsg=4326)
+final_output = final_output.to_crs(epsg=4326)
+
+# print(final_output.head())
 
 # Exporting to a GeoJSON file for interpretation
-final_mixed_use.to_file(
-    "output/challenge_result2.geojson",
+final_output.to_file(
+    "output/challenge_result.geojson",
     driver="GeoJSON"
 )
+
+print("GeoJSON saved successfully.")
