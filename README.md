@@ -36,3 +36,23 @@ The final output is exported as a GeoJSON file for visualization in QGIS.
 
 3. *How does this relate to the "Input / Process / Output" structure of GIS algorithms discussed in Lecture 3?*
 - This procedure is a prerequisite of any geoprocessing. This establishes that any data to be processed is compatible and can interact with each other.
+
+### D.2 Reflection - Spatial Process and Classification
+1. *Why is CRS transformation necessary before area computation?*
+- CRS transformation converts geographic units (degrees) into linear units (sq.m, ha, acres, etc.) which represents area computations more accurately.
+
+2. *How does CRS choice affect area accuracy?*
+CRS choice affects area accuracy significantly. A projected coordinate reference system should always be used whenever area computations are implemented so that area computations are accurate. 
+
+3. *Does the overlay create new spatial units that did not previously exist?*
+- Yes. It creates new features based on the intersection of the parcels and landuse GeoDataFrames
+
+4. *Why is classification considered part of the analysis process?*
+- We are now working on new derived data based on the steps implemented. We also filtered and queried the attributes of the created data to operationalize spatial operations and answer spatial queries.
+
+
+5. *Is classification sensitive to sliver geometries or topology errors?"
+- I believe not. Because the classification we implemented are already attribute-based. Spatial operations, on the other hand, are sensitive to sliver geometries and topology errors.
+
+6. *Would changing the dominance threshold alter spatial patterns?*
+- Yes. Increasing or decreasing the thresholds (even just by 1%) WILL ALTER spatial patterns since we are implementing the filter based on computed field values.
