@@ -42,7 +42,7 @@ The final output is exported as a GeoJSON file for visualization in QGIS.
 - CRS transformation converts geographic units (degrees) into linear units (sq.m, ha, acres, etc.) which represents area computations more accurately.
 
 2. *How does CRS choice affect area accuracy?*
-CRS choice affects area accuracy significantly. A projected coordinate reference system should always be used whenever area computations are implemented so that area computations are accurate. 
+- CRS choice affects area accuracy significantly. A projected coordinate reference system should always be used whenever area computations are implemented so that area computations are accurate. 
 
 3. *Does the overlay create new spatial units that did not previously exist?*
 - Yes. It creates new features based on the intersection of the parcels and landuse GeoDataFrames
