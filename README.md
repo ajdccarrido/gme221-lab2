@@ -58,4 +58,20 @@ The final output is exported as a GeoJSON file for visualization in QGIS.
 - Yes. Increasing or decreasing the thresholds (even just by 1%) WILL ALTER spatial patterns since we are implementing the filter based on computed field values.
 
 ### E.3 Reflection - Visualization and Interpretation in QGIS
-- Majority of the parcels (280 out of 316) were 100% residential. Some of the parcels were road lots that spilled over other land use categories, with the exception of those parcels that are almost 100% (95% above) which may be due to small inconsistencies between the land use and parcel data.
+- To visualize the results, I used Natural Jenks as the symbology, with the red areas representing high residential land use dominance. Most of the parcels (280 out of 15) had 100% of their total land area belonging to the residential land use, with the exception of some parcels and the road lots the also overlapped with other land use categories. Some parcels located in the lower part had approximately 75% of their land area belonging to land use, with the remaining fraction belonging to other categories.
+
+### Part F. Challenge Exercise - Design Your own Spatial Analysis
+1. *What spatial question did you choose?*
+- I chose Option 2 - Identify all Mixed-Use Parcels. The condition set is that there should be no single land use that must exceed by 60%
+
+2. *What algorithmic steps did you design?*
+#### STEP 1. AREA COMPUTATIONS
+I followed the steps from the previous part up to the computation the percentage of land use relative to the total area of a parcel.
+
+#### STEP 2. IDENTIFY PARCELS WITH MORE THAN ONE LAND USE CATEGORY
+
+#### STEP 3. APPLY CONDITIONAL FILTERING
+
+#### STEP 4. MERGE ORIGINAL GEOMETRY WITH THE RESULTING GEODATAFRAME
+
+#### STEP 5. EXPORT RESULTS AND INTERPRET IN QGIS
