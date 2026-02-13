@@ -58,7 +58,7 @@ The final output is exported as a GeoJSON file for visualization in QGIS.
 - Yes. Increasing or decreasing the thresholds (even just by 1%) WILL ALTER spatial patterns since we are implementing the filter based on computed field values.
 
 ### E.3 Reflection - Visualization and Interpretation in QGIS
-- To visualize the results, I used Natural Jenks as the symbology, with the red areas representing high residential land use dominance. Most of the parcels (280 out of 15) had 100% of their total land area belonging to the residential land use, with the exception of some parcels and the road lots the also overlapped with other land use categories. Some parcels located in the lower part had approximately 75% of their land area belonging to land use, with the remaining fraction belonging to other categories.
+- To visualize the results, I used Natural Jenks as the symbology, with the red areas representing high residential land use dominance. Most of the parcels (280 out of 315) had 100% of their total land area belonging to the residential land use, with the exception of some parcels and the road lots the also overlapped with other land use categories. Some parcels located in the lower part had approximately 75% of their land area belonging to land use, with their remaining areas belonging to other categories.
 
 ### Part F. Challenge Exercise - Design Your Own Spatial Analysis
 
