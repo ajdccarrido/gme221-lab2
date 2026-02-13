@@ -5,8 +5,8 @@ from sqlalchemy import create_engine
 host = "localhost"
 port = "5432"
 dbname = "gme221"
-user = "postgres"
-password = "Elupdb2025*"
+user = "ajdcc"
+password = "gme221_db"
 
 # Create connection string
 conn_str = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{dbname}"
@@ -60,10 +60,32 @@ overlay["percentage"] = overlay["percentage"].round(2)
 
 # print(overlay.head())
 
+# Get Dominant land use for per parcel
+idx = overlay.groupby("parcel_pin")["percentage"].idxmax()
+
+dominant = overlay.loc[idx, ["parcel_pin", "name", "percentage"]]
+
+# Dissolve (aggregate) by parcel_pin to get percentage and dominant land use
+geom = overlay[["parcel_pin", "geometry"]].dissolve(by="parcel_pin").reset_index()
+
+# Merge dominant land use back to dissolved geometries
+overlay = geom.merge(
+    dominant,
+    on="parcel_pin",
+    how="left"
+)
+
 dominant_res = overlay[
     ((overlay["name"] == "Residential Zone - Low Density") |
      (overlay["name"] == "Residential Zone - Medium Density")) &
      (overlay["percentage"] >= 60)
 ].copy()
 
-print(dominant_res.head())
+dominant_res = dominant_res.to_crs(epsg=4326)
+
+dominant_res.to_file(
+    "output/dominant_residential.geojson",
+    driver="GeoJSON"
+)
+
+print("GeoJSON saved successfully.")
