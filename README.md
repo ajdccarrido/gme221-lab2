@@ -56,3 +56,6 @@ The final output is exported as a GeoJSON file for visualization in QGIS.
 
 6. *Would changing the dominance threshold alter spatial patterns?*
 - Yes. Increasing or decreasing the thresholds (even just by 1%) WILL ALTER spatial patterns since we are implementing the filter based on computed field values.
+
+### E.3 Reflection - Visualization and Interpretation in QGIS
+- Majority of the parcels (280 out of 316) were 100% residential. Some of the parcels were road lots that spilled over other land use categories, with the exception of those parcels that are almost 100% (95% above) which may be due to small inconsistencies between the land use and parcel data.
