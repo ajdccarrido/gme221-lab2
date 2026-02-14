@@ -46,7 +46,7 @@ mixed_parcels_idx = overlay.groupby("parcel_pin").filter(lambda x: len(x) > 1).i
 # Using the identified indices of the mixed_parcels, fetch all features matching the condition using the .loc method
 mixed = overlay.loc[mixed_parcels_idx, ["parcel_pin", "name", "percentage"]]
 
-# Identify all parcel_pin values that have a land use greater than 60%
+# Identify the max percentage share of a land use of parcels
 max_per_parcel = mixed.groupby("parcel_pin")["percentage"].max()
 
 # Get parcel_pin values of parcels that have no single land use greater than 60%

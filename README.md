@@ -83,7 +83,7 @@ The ***mixed*** variable now contains all the parcels that overlaps with multipl
 I utilized the .groupby() and .max() operators to determine the maximum percentage share of various land uses on the parcels. Then, I used conditional filtering to select all maximum percentage shares that are less than 60% to satisfy the mixed use condition. I extracted the parcel_pin values of those features by using the .index attribute.
 
 ```bash
-# Identify all parcel_pin values that have a land use greater than 60%
+# Identify the max percentage share of a land use of parcels
 max_per_parcel = mixed.groupby("parcel_pin")["percentage"].max()
 
 # Get parcel_pin values of parcels that have no single land use greater than 60%
